@@ -2,8 +2,8 @@
 'use client'
 import { createContext, useContext, useState, useEffect } from "react";
 import { onAuthStateChanged, signOut as authSignOut } from "firebase/auth";
-import { getDoc, doc, setDoc, updateDoc } from "firebase/firestore";
-import {auth,db,storage} from '../../../firebase'
+import { getDoc, doc, setDoc, updateDoc, collection, getDocs } from "firebase/firestore";
+import { auth, db, storage } from '../../../firebase'
 
 const UserContext = createContext();
 
@@ -27,26 +27,46 @@ export const UserProvider = ({ children }) => {
 
     const authStateChanged = async (user) => {
         setIsLoading(true);
-        // console.log(user);
+
         if (!user) {
             clear();
             return;
         }
+        const querySnapshot = await getDocs(collection(db, "users"));
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.length);
+        });
+        const userDocRef = doc(db, "users", user.uid);
+        let currentUser;
 
-        const userDocExist = await getDoc(doc(db, "users", user.uid));
-        if (userDocExist.exists()) {
-            await updateDoc(doc(db, "users", user.uid), {
-                isOnline: true,
-            });
+        try {
+            const userDoc = await getDoc(userDocRef);
+
+            if (userDoc.exists()) {
+                // Add logging to inspect the document data
+                // console.log("User document data:", userDoc.data());
+
+                await updateDoc(doc(db, "users", user.uid), {
+                    isOnline: true,
+                });
+
+                currentUser = userDoc.data();
+            } else {
+                // Handle case where document does not exist
+                console.log("User document does not exist.");
+            }
+        } catch (error) {
+            console.error(error);
         }
 
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        console.log(userDoc.data())
+        // Add logging to debug currentUser value
+        // console.log("CurrentUser:", currentUser);
 
-        setCurrentUser(userDoc.data());
+        setCurrentUser(currentUser);
         setIsLoading(false);
-        // userDoc.data()
     };
+
 
     const signOut = () => {
         authSignOut(auth).then(() => clear());

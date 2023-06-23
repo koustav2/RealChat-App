@@ -12,6 +12,7 @@ import {
     FacebookAuthProvider,
     signInWithPopup,
     sendPasswordResetEmail,
+    signInWithRedirect
 } from "firebase/auth";
 
 import { useRouter } from 'next/navigation';
@@ -69,7 +70,8 @@ function page() {
 
     const signInWithGoogle = async () => {
         try {
-            await signInWithPopup(auth, gProvider);
+            await signInWithRedirect(auth, gProvider);
+            console.log("Login with google",auth);
         } catch (error) {
             console.error("An error occured", error);
         }
@@ -77,7 +79,7 @@ function page() {
 
     const signInWithFacebook = async () => {
         try {
-            await signInWithPopup(auth, fProvider);
+            await signInWithRedirect(auth, fProvider);
         } catch (error) {
             console.error("An error occured", error);
         }

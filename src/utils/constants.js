@@ -14,6 +14,11 @@ export const profileColors = [
     "#4AAC67",
     "#FFE5A5",
     "#CD413C",
+    '#e86af0',
+    '#ff00c1',
+    '#00fff9',
+    '#afffed',
+    '#ff5500'
 ];
 
 export const DELETED_FOR_ME = "DELETED_FOR_ME";

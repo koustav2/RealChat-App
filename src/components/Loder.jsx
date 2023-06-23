@@ -9,6 +9,7 @@ const Loader = () => {
                 height={100}
                 alt="Loading..."
                 src="/loader.svg"
+                priority={true}
             />
         </div>
     );

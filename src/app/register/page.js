@@ -7,6 +7,7 @@ import {
   GoogleAuthProvider,
   FacebookAuthProvider,
   signInWithPopup,
+  signInWithRedirect
 } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
@@ -119,7 +120,7 @@ function page() {
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, gProvider);
+      await signInWithRedirect(auth, gProvider);
     } catch (error) {
       console.error("An error occured", error);
     }
@@ -127,7 +128,7 @@ function page() {
 
   const signInWithFacebook = async () => {
     try {
-      await signInWithPopup(auth, fProvider);
+      await signInWithRedirect(auth, fProvider);
     } catch (error) {
       console.error("An error occured", error);
     }

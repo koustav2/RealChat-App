@@ -29,13 +29,6 @@ function page() {
       <div className="bg-c6 flex h-[100vh]">
         <div className="flex w-full shrink-0">
           <LeftNav />
-          Home
-
-          <button className='h-24 bg-blue-700' onClick={
-            signOut
-          }>
-            signOut
-          </button>
           <div className="flex bg-c2 grow">
           <SideBar />
           {data.user && <Chat />}
