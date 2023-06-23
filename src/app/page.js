@@ -6,32 +6,40 @@ import { useEffect } from "react";
 import { useAuth } from "@/components/context/authContext";
 import { useRouter } from "next/navigation";
 import Loader from '@/components/Loder';
+import { useChatContext } from '@/components/context/chatContext';
+import SideBar from '@/components/SideBar';
+import LeftNav from '@/components/LeftNav';
+import Chat from './Chat';
 function page() {
+
   const { currentUser, isLoading, signOut } = useAuth();
   const router = useRouter();
+
   useEffect(() => {
     if (!isLoading && !currentUser) {
       router.push("/login");
     }
   }, [currentUser, isLoading, router]);
+  const { data } = useChatContext();
 
   return !currentUser ? (
     <Loader />
   ) : (
     <>
-      <div className="bg-c1 flex h-[100vh]">
+      <div className="bg-c6 flex h-[100vh]">
         <div className="flex w-full shrink-0">
-          {/* <LeftNav /> */}
+          <LeftNav />
           Home
+
           <button className='h-24 bg-blue-700' onClick={
             signOut
           }>
             signOut
           </button>
-          {/* <div className="flex bg-c2 grow">
-          <Sidebar />
+          <div className="flex bg-c2 grow">
+          <SideBar />
           {data.user && <Chat />}
-        </div> */}
+        </div>
         </div>
       </div>
     </>

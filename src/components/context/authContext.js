@@ -41,8 +41,9 @@ export const UserProvider = ({ children }) => {
         }
 
         const userDoc = await getDoc(doc(db, "users", user.uid));
+        console.log(userDoc.data())
 
-        setCurrentUser(user);
+        setCurrentUser(userDoc.data());
         setIsLoading(false);
         // userDoc.data()
     };

@@ -1,5 +1,6 @@
 import { UserProvider } from '@/components/context/authContext'
 import './globals.css'
+import { ChatContextProvider } from '@/components/context/chatContext'
 
 
 
@@ -13,10 +14,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <UserProvider>
-        <body>
-          <link rel="icon" href="/" sizes="any" />
-          {children}
-        </body>
+        <ChatContextProvider>
+          <body>
+            <link rel="icon" href="/" sizes="any" />
+            {children}
+          </body>
+        </ChatContextProvider>
       </UserProvider>
     </html>
   )
