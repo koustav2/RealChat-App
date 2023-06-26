@@ -7,15 +7,17 @@ import {
     useReducer,
 } from "react";
 import { useAuth } from "./authContext";
+import { auth } from "../../../firebase";
 
 const ChatContext = createContext();
 
 export const ChatContextProvider = ({ children }) => {
     const { currentUser } = useAuth();
 
+
     const [chats, setChats] = useState({});
     const [selectedChat, setSelectedChat] = useState(null);
-    const [users, setUsers] = useState(false);2
+    const [users, setUsers] = useState(false); 2
     const [inputText, setInputText] = useState("");
     const [attachment, setAttachment] = useState(null);
     const [attachmentPreview, setAttachmentPreview] = useState(null);
@@ -37,12 +39,14 @@ export const ChatContextProvider = ({ children }) => {
     };
 
     const chatReducer = (state, action) => {
+        const currentUser = auth.currentUser
+        const uid = currentUser ? currentUser.uid : null;
         switch (action.type) {
             case "CHANGE_USER":
                 return {
                     user: action.payload,
                     chatId:
-                        currentUser.uid > action.payload.uid
+                        currentUser && uid && currentUser.uid > action.payload.uid // Add null check here
                             ? currentUser.uid + action.payload.uid
                             : action.payload.uid + currentUser.uid,
                 };

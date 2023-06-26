@@ -32,7 +32,7 @@ function page() {
     if (!isLoading && currentUser) {
       router.push("/");
     }
-  }, [currentUser, isLoading]);
+  }, [currentUser, isLoading, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -113,7 +113,7 @@ function ChatFooter() {
                 <div className="absolute -top-6 left-4 bg-c2 w-full h-6">
                     <div className="flex gap-2 w-full h-full opacity-50 text-sm text-white">
                         {`${data.user.displayName} is typing`}
-                        <Image src="/typing.svg" alt={`${data.user.displayName} is typing`} width={20} height={20} />
+                        <Image src="/typing.svg" alt={`${data?.user?.displayName} is typing`} width={20} height={20} />
                     </div>
                 </div>
             )}
