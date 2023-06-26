@@ -121,7 +121,7 @@ function page() {
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, gProvider);
+      await signInWithRedirect(auth, gProvider);
     } catch (error) {
       console.error("An error occured", error);
     }
@@ -129,7 +129,7 @@ function page() {
 
   const signInWithFacebook = async () => {
     try {
-      await signInWithPopup(auth, fProvider);
+      await signInWithRedirect(auth, fProvider);
     } catch (error) {
       console.error("An error occured", error);
     }
@@ -169,7 +169,7 @@ function page() {
         </div>
         <div className="flex items-center gap-1">
           <span className="w-5 h-[1px] bg-c3"></span>
-          {/* <span className="text-c3 font-semibold">OR</span> */}
+          <span className="text-c3 font-semibold">OR</span>
           <span className="w-5 h-[1px] bg-c3"></span>
         </div>
         <form
