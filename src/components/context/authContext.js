@@ -35,7 +35,7 @@ export const UserProvider = ({ children }) => {
         const querySnapshot = await getDocs(collection(db, "users"));
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            console.log(doc.length);
+            // console.log(doc.length);
         });
         const userDocRef = doc(db, "users", user.uid);
         let currentUser;

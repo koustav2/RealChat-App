@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
@@ -46,7 +47,6 @@ function Chats() {
             const updatedUsers = {};
             snapshot.forEach((doc) => {
                 updatedUsers[doc.id] = doc.data();
-                // console.log("updatedUsers", updatedUsers);
             });
             setUsers(updatedUsers);
             if (!isBlockExecutedRef.current) {
@@ -54,7 +54,125 @@ function Chats() {
             }
         });
         return unsubscribe;
-    }, [setUsers]);
+    }, []);
+
+    useEffect(() => {
+        const documentIds = Object.keys(chats);
+        if (documentIds.length === 0) return;
+        const q = query(
+            collection(db, "chats"),
+            where("__name__", "in", documentIds)
+        );
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            let msgs = {};
+            snapshot.forEach((doc) => {
+                if (doc.id !== data.chatId) {
+                    msgs[doc.id] = doc
+                        .data()
+                        .messages?.filter(
+                            (m) =>
+                                m?.read === false &&
+                                m.sender !== currentUser.uid
+                        );
+                }
+                Object.keys(msgs || {}).map((c) => {
+                    if (msgs[c]?.length < 1) {
+                        delete msgs[c];
+                    }
+                });
+            });
+            setUnreadMsgs(msgs);
+            // console.log("$$$$$$$$$$", msgs);
+        });
+        return unsubscribe;
+    }, [chats, selectedChat]);
+
+    useEffect(() => {
+        const getChats = () => {
+            const unsub = onSnapshot(
+                doc(db, "userChats", currentUser.uid),
+                (doc) => {
+                    if (doc.exists()) {
+                        const data = doc.data();
+
+                        setChats(data);
+
+                        if (data.hasOwnProperty("isTyping"))
+                            delete data.isTyping;
+
+                        if (
+                            isUsersFetchedRef.current &&
+                            !isBlockExecutedRef.current &&
+                            users
+                        ) {
+                            const firstChat = Object.values(data)
+                                .filter(
+                                    (chat) =>
+                                        !chat?.hasOwnProperty("chatDeleted")
+                                )
+                                .sort((a, b) => {
+                                    return b.date - a.date;
+                                })[0];
+
+                            if (firstChat) {
+                                const user = users[firstChat?.userInfo?.uid];
+                                const chatId =
+                                    currentUser?.uid && user?.uid
+                                        ? currentUser.uid > user.uid
+                                            ? currentUser.uid + user.uid
+                                            : user.uid + currentUser.uid
+                                        : null;
+
+                                handleSelect(user);
+                                readChat(chatId);
+                            }
+                            isBlockExecutedRef.current = true;
+                        }
+                    }
+                }
+            );
+            return () => unsub();
+        };
+        currentUser.uid && getChats();
+    }, [isBlockExecutedRef.current, users]);
+
+    useEffect(() => {
+        resetFooterStates();
+    }, [data?.chatId]);
+
+    const filteredChats = Object.entries(chats || {})
+        .filter(([, chat]) => !chat?.hasOwnProperty("chatDeleted"))
+        .filter(
+            ([, chat]) =>
+                chat?.userInfo?.displayName
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                chat?.lastMessage?.text
+                    .toLowerCase()
+                    .includes(search.toLowerCase())
+        )
+        .sort((a, b) => b[1].date - a[1].date);
+
+    const readChat = async (chatId) => {
+        const chatRef = doc(db, "chats", chatId);
+        const chatDoc = await getDoc(chatRef);
+        let updatedMessages = chatDoc.data().messages.map((message) => {
+            if (message?.read === false) {
+                message.read = true;
+            }
+            return message;
+        });
+        await updateDoc(chatRef, { messages: updatedMessages });
+    };
+
+    const handleSelect = (user, selectedChatId) => {
+        setSelectedChat(user);
+        dispatch({ type: "CHANGE_USER", payload: user });
+
+        if (unreadMsgs?.[selectedChatId]?.length > 0) {
+            readChat(selectedChatId);
+        }
+    };
 
     return (
         <div className="flex flex-col h-full">
@@ -69,7 +187,7 @@ function Chats() {
                 />
             </div>
             <ul className="flex flex-col w-full my-5 gap-[2px]">
-                {/* {Object.keys(users || {}).length > 0 &&
+                {Object.keys(users || {}).length > 0 &&
                     filteredChats?.map((chat) => {
                         const timestamp = new Timestamp(
                             chat[1].date?.seconds,
@@ -82,7 +200,7 @@ function Chats() {
                                 key={chat[0]}
                                 id={chat[0]}
                                 onClick={() => handleSelect(user, chat[0])}
-                                className={`h-[90px] flex items-center gap-4 rounded-3xl hover:bg-c1 p-4 cursor-pointer ${selectedChat?.uid === user.uid
+                                className={`h-[90px] flex items-center gap-4 rounded-3xl hover:bg-c1 p-4 cursor-pointer ${selectedChat && selectedChat.uid === user.uid
                                     ? "bg-c1"
                                     : ""
                                     }`}
@@ -112,7 +230,7 @@ function Chats() {
                                 </div>
                             </li>
                         );
-                    })} */}
+                    })}
             </ul>
         </div>
     )

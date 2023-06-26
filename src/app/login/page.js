@@ -1,10 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState } from 'react'
 import Link from "next/link";
 import { IoLogoGoogle, IoLogoFacebook } from "react-icons/io";
-import { toast,ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import ToastMessage from '@/components/ToastMessage';
 import {
     signInWithEmailAndPassword,
@@ -12,16 +12,18 @@ import {
     FacebookAuthProvider,
     signInWithPopup,
     sendPasswordResetEmail,
-    signInWithRedirect
+    signInWithRedirect,
+    OAuthProvider
 } from "firebase/auth";
 
 import { useRouter } from 'next/navigation';
-import {auth,db,storage} from '../../../firebase'
+import { auth, db, storage } from '../../../firebase'
 import { useAuth } from '@/components/context/authContext';
 import Loader from '@/components/Loder';
 
 const gProvider = new GoogleAuthProvider();
 const fProvider = new FacebookAuthProvider();
+const aProvider =new OAuthProvider('apple.com');
 
 
 function page() {
@@ -71,7 +73,6 @@ function page() {
     const signInWithGoogle = async () => {
         try {
             await signInWithRedirect(auth, gProvider);
-            console.log("Login with google",auth);
         } catch (error) {
             console.error("An error occured", error);
         }
@@ -99,7 +100,7 @@ function page() {
                         Connect and chat with anyone, anywhere
                     </div>
                 </div>
-                <div className="flex items-center gap-2 w-full mt-10 mb-5">
+                {/* <div className="flex items-center gap-2 w-full mt-10 mb-5">
                     <div
                         className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-1/2 h-14 rounded-md cursor-pointer p-[1px]"
                         onClick={signInWithGoogle}
@@ -118,10 +119,10 @@ function page() {
                             <span>Login with Facebook</span>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div className="flex items-center gap-1">
                     <span className="w-5 h-[1px] bg-c3"></span>
-                    <span className="text-c3 font-semibold">OR</span>
+                    {/* <span className="text-c3 font-semibold">OR</span> */}
                     <span className="w-5 h-[1px] bg-c3"></span>
                 </div>
                 <form

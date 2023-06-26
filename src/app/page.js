@@ -9,7 +9,7 @@ import Loader from '@/components/Loder';
 import { useChatContext } from '@/components/context/chatContext';
 import SideBar from '@/components/SideBar';
 import LeftNav from '@/components/LeftNav';
-import Chat from './Chat';
+import Chat from '@/components/chat/Chat';
 function page() {
 
   const { currentUser, isLoading, signOut } = useAuth();

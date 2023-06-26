@@ -27,11 +27,12 @@ const fProvider = new FacebookAuthProvider();
 function page() {
   const router = useRouter();
   const { currentUser, isLoading } = useAuth();
+
   useEffect(() => {
     if (!isLoading && currentUser) {
       router.push("/");
     }
-  }, [currentUser, isLoading, router]);
+  }, [currentUser, isLoading]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -120,7 +121,7 @@ function page() {
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithRedirect(auth, gProvider);
+      await signInWithPopup(auth, gProvider);
     } catch (error) {
       console.error("An error occured", error);
     }
@@ -128,7 +129,7 @@ function page() {
 
   const signInWithFacebook = async () => {
     try {
-      await signInWithRedirect(auth, fProvider);
+      await signInWithPopup(auth, fProvider);
     } catch (error) {
       console.error("An error occured", error);
     }
@@ -168,7 +169,7 @@ function page() {
         </div>
         <div className="flex items-center gap-1">
           <span className="w-5 h-[1px] bg-c3"></span>
-          <span className="text-c3 font-semibold">OR</span>
+          {/* <span className="text-c3 font-semibold">OR</span> */}
           <span className="w-5 h-[1px] bg-c3"></span>
         </div>
         <form
