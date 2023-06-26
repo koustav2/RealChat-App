@@ -30,7 +30,7 @@ function page() {
 
   useEffect(() => {
     if (!isLoading && currentUser) {
-      router.push("/");
+      router.push("/login");
     }
   }, [currentUser, isLoading, router]);
 
