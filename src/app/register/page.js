@@ -147,7 +147,7 @@ function page() {
             Connect and chat with anyone, anywhere
           </div>
         </div>
-        <div className="flex items-center gap-2 w-full mt-10 mb-5">
+        {/* <div className="flex items-center gap-2 w-full mt-10 mb-5">
           <div
             className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-1/2 h-14 rounded-md cursor-pointer p-[1px]"
           onClick={signInWithGoogle}
@@ -171,7 +171,7 @@ function page() {
           <span className="w-5 h-[1px] bg-c3"></span>
           <span className="text-c3 font-semibold">OR</span>
           <span className="w-5 h-[1px] bg-c3"></span>
-        </div>
+        </div> */}
         <form
           onSubmit={handleSubmit}
           className="flex flex-col items-center gap-3 w-[500px] mt-5"
