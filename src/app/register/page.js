@@ -198,9 +198,15 @@ function page() {
             required
           />
           {/* <input type="file" /> */}
-          <button className="mt-4 w-full h-14 rounded-xl outline-none text-base font-semibold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+          <button className="mt-4 w-full h-14 rounded-xl outline-none text-base font-semibold bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 relative">
+            {isLoading ? (
+              <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center">
+                <div className="w-6 h-6 rounded-full border-2 border-t-2 border-gray-200 animate-spin"></div>
+              </div>
+            ) : null}
             Sign Up
           </button>
+
         </form>
         <div className="flex justify-center gap-1 text-c3 mt-5">
           <span>Already have an account?</span>
