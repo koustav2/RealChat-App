@@ -83,7 +83,7 @@ function Composebar() {
                     }
                 },
                 (error) => {
-                    toast.error(error);
+                    toast.error(error.message);
                 },
                 () => {
                     getDownloadURL(uploadTask.snapshot.ref).then(
@@ -167,7 +167,7 @@ function Composebar() {
                         }
                     },
                     (error) => {
-                        toast.error(error);
+                        toast.error(error.message);
                     },
                     () => {
                         getDownloadURL(uploadTask.snapshot.ref).then(
@@ -206,7 +206,7 @@ function Composebar() {
             setAttachmentPreview(null);
             setEditMsg(null);
         } catch (err) {
-            toast.error(err);
+            toast.error(err.message);
         }
     }
 

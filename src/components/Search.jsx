@@ -45,7 +45,7 @@ function Search() {
                     });
                 }
             } catch (error) {
-                toast.error(error);
+                toast.error(error.message);
                 setErr(error);
             }
         }
@@ -91,7 +91,7 @@ function Search() {
             setUsername("");
             dispatch({ type: "CHANGE_USER", payload: user });
         } catch (error) {
-            toast.error(error);
+            toast.error(error.message);
         }
     };
 

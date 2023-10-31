@@ -21,7 +21,7 @@ export const UserProvider = ({ children }) => {
             setCurrentUser(null);
             setIsLoading(false);
         } catch (error) {
-            toast.error(error);
+            toast.error(error.message);
         }
     };
 
@@ -57,7 +57,7 @@ export const UserProvider = ({ children }) => {
                 toast.error("User document does not exist.");
             }
         } catch (error) {
-            toast.error(error);
+            toast.error(error.message);
         }
 
         // Add logging to debug currentUser value

@@ -18,10 +18,10 @@ export default function RootLayout({ children }) {
           <body>
             <link rel="icon" href="/" sizes="any" />
             {children}
+            <ToastMessage />
           </body>
         </ChatContextProvider>
       </UserProvider>
-      <ToastMessage />
     </html>
   )
 }

@@ -77,7 +77,7 @@ function LeftNav() {
             }
         );
     } catch (error) {
-        toast.error(error);
+        toast.error(error.message);
     }
 };
 
@@ -90,7 +90,7 @@ const uploadImageToFirebase = async (file) => {
                 "state_changed",
                 (snapshot) => {},
                 (error) => {
-                    toast.error(error);
+                    toast.error(error.message);
                 },
                 () => {
                     getDownloadURL(uploadTask.snapshot.ref).then(
@@ -105,7 +105,7 @@ const uploadImageToFirebase = async (file) => {
             );
         }
     } catch (error) {
-        toast.error(error);
+        toast.error(error.message);
     }
 };
 
@@ -124,7 +124,7 @@ const onkeyDown = (event) => {
 const editProfileContainer = () => {
     return (
         <div className="flex flex-col items-center relative">
-            <ToastMessage />
+            {/* <ToastMessage /> */}
             <Icon
                 size="small"
                 className="absolute top-0 right-5 hover:bg-c2"

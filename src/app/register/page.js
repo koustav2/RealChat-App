@@ -72,7 +72,7 @@ function page() {
             }
           },
           (error) => {
-            toast.error(error);
+            toast.error(error.message);
           },
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then(
@@ -115,7 +115,7 @@ function page() {
         router.push("/");
       }
     } catch (error) {
-      toast.error(error);
+      toast.error(error.message);
     }
   };
 
@@ -123,7 +123,7 @@ function page() {
     try {
       await signInWithRedirect(auth, gProvider);
     } catch (error) {
-      toast.error("An error occured", error);
+      toast.error("An error occured", error.message);
     }
   };
 
@@ -131,7 +131,7 @@ function page() {
     try {
       await signInWithRedirect(auth, fProvider);
     } catch (error) {
-      toast.error("An error occured", error);
+      toast.error("An error occured", error.message);
     }
   };
 
@@ -139,7 +139,7 @@ function page() {
     <Loader />
   ) : (
     <div className="h-[100vh] flex justify-center items-center bg-c1">
-      <ToastMessage />
+      {/* <ToastMessage /> */}
       <div className="flex items-center flex-col">
         <div className="text-center">
           <div className="text-4xl font-bold">Create New Account</div>
