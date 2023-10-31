@@ -21,7 +21,7 @@ export const UserProvider = ({ children }) => {
             setCurrentUser(null);
             setIsLoading(false);
         } catch (error) {
-            console.error(error);
+            toast.error(error);
         }
     };
 
@@ -35,7 +35,7 @@ export const UserProvider = ({ children }) => {
         const querySnapshot = await getDocs(collection(db, "users"));
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            // console.log(doc.length);
+            // toast.log(doc.length);
         });
         const userDocRef = doc(db, "users", user.uid);
         let currentUser;
@@ -45,7 +45,7 @@ export const UserProvider = ({ children }) => {
 
             if (userDoc.exists()) {
                 // Add logging to inspect the document data
-                // console.log("User document data:", userDoc.data());
+                // toast.log("User document data:", userDoc.data());
 
                 await updateDoc(doc(db, "users", user.uid), {
                     isOnline: true,
@@ -54,14 +54,14 @@ export const UserProvider = ({ children }) => {
                 currentUser = userDoc.data();
             } else {
                 // Handle case where document does not exist
-                console.log("User document does not exist.");
+                toast.error("User document does not exist.");
             }
         } catch (error) {
-            console.error(error);
+            toast.error(error);
         }
 
         // Add logging to debug currentUser value
-        // console.log("CurrentUser:", currentUser);
+        // toast.log("CurrentUser:", currentUser);
 
         setCurrentUser(currentUser);
         setIsLoading(false);

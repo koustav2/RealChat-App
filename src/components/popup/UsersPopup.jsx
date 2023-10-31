@@ -72,7 +72,7 @@ function UsersPopup(props) {
       dispatch({ type: "CHANGE_USER", payload: user });
       props.onHide();
     } catch (error) {
-      console.error(error);
+      toast.error(error);
     }
   };
 

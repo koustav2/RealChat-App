@@ -81,7 +81,7 @@ function ChatMenu({ setShowMenu, showMenu }) {
                 dispatch({ type: "EMPTY" });
             }
         } catch (err) {
-            console.error(err);
+            toast.error(err);
         }
     };
     return (

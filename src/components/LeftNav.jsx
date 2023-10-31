@@ -77,7 +77,7 @@ function LeftNav() {
             }
         );
     } catch (error) {
-        console.error(error);
+        toast.error(error);
     }
 };
 
@@ -90,7 +90,7 @@ const uploadImageToFirebase = async (file) => {
                 "state_changed",
                 (snapshot) => {},
                 (error) => {
-                    console.error(error);
+                    toast.error(error);
                 },
                 () => {
                     getDownloadURL(uploadTask.snapshot.ref).then(
@@ -105,7 +105,7 @@ const uploadImageToFirebase = async (file) => {
             );
         }
     } catch (error) {
-        console.error(error);
+        toast.error(error);
     }
 };
 

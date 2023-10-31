@@ -71,7 +71,7 @@ function Message({ message }) {
             // Update the chat document in Firestore with the new "messages" array
             await updateDoc(chatRef, { messages: updatedMessages });
         } catch (err) {
-            console.error(err);
+            toast.error(err);
         }
     }
 

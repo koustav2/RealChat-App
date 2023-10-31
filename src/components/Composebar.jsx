@@ -83,7 +83,7 @@ function Composebar() {
                     }
                 },
                 (error) => {
-                    console.error(error);
+                    toast.error(error);
                 },
                 () => {
                     getDownloadURL(uploadTask.snapshot.ref).then(
@@ -156,18 +156,18 @@ function Composebar() {
                         const progress =
                             (snapshot.bytesTransferred / snapshot.totalBytes) *
                             100;
-                        console.log("Upload is " + progress + "% done");
+                        toast.info("Upload is " + progress + "% done");
                         switch (snapshot.state) {
                             case "paused":
-                                console.log("Upload is paused");
+                                toast.info("Upload is paused");
                                 break;
                             case "running":
-                                console.log("Upload is running");
+                                toast.info("Upload is running");
                                 break;
                         }
                     },
                     (error) => {
-                        console.error(error);
+                        toast.error(error);
                     },
                     () => {
                         getDownloadURL(uploadTask.snapshot.ref).then(
@@ -206,7 +206,7 @@ function Composebar() {
             setAttachmentPreview(null);
             setEditMsg(null);
         } catch (err) {
-            console.error(err);
+            toast.error(err);
         }
     }
 
