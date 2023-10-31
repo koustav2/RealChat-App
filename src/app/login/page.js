@@ -23,7 +23,7 @@ import Loader from '@/components/Loder';
 
 const gProvider = new GoogleAuthProvider();
 const fProvider = new FacebookAuthProvider();
-const aProvider =new OAuthProvider('apple.com');
+const aProvider = new OAuthProvider('apple.com');
 
 
 function page() {
@@ -45,7 +45,7 @@ function page() {
         try {
             await signInWithEmailAndPassword(auth, email, password);
         } catch (error) {
-            console.error(error);
+            toast.error(error);
         }
     };
 
@@ -64,9 +64,9 @@ function page() {
                     autoClose: 5000,
                 }
             );
-            console.log("Email send to your registered email id.");
+            toast.log("Email send to your registered email id.");
         } catch (error) {
-            console.error("An error occured", error);
+            toast.error("An error occured", error);
         }
     };
 
@@ -74,7 +74,7 @@ function page() {
         try {
             await signInWithRedirect(auth, gProvider);
         } catch (error) {
-            console.error("An error occured", error);
+            toast.error("An error occured", error);
         }
     };
 
@@ -82,7 +82,7 @@ function page() {
         try {
             await signInWithRedirect(auth, fProvider);
         } catch (error) {
-            console.error("An error occured", error);
+            toast.error("An error occured", error);
         }
     };
 

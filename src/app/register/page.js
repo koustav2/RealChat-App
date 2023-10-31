@@ -48,7 +48,7 @@ function page() {
         email,
         password
       );
-      // console.log(user);
+      // toast.log(user);
 
       if (file) {
         const storageRef = ref(storage, displayName);
@@ -61,18 +61,18 @@ function page() {
             const progress =
               (snapshot.bytesTransferred / snapshot.totalBytes) *
               100;
-            console.log("Upload is " + progress + "% done");
+            toast.info("Upload is " + progress + "% done");
             switch (snapshot.state) {
               case "paused":
-                console.log("Upload is paused");
+                toast.info("Upload is paused");
                 break;
               case "running":
-                console.log("Upload is running");
+                toast.info("Upload is running");
                 break;
             }
           },
           (error) => {
-            console.error(error);
+            toast.error(error);
           },
           () => {
             getDownloadURL(uploadTask.snapshot.ref).then(
@@ -81,7 +81,7 @@ function page() {
                   displayName,
                   photoURL: downloadURL,
                 });
-                console.log("File available at", downloadURL);
+                toast.log("File available at", downloadURL);
 
                 await setDoc(doc(db, "users", user.uid), {
                   uid: user.uid,
@@ -115,7 +115,7 @@ function page() {
         router.push("/");
       }
     } catch (error) {
-      console.error(error);
+      toast.error(error);
     }
   };
 
@@ -123,7 +123,7 @@ function page() {
     try {
       await signInWithRedirect(auth, gProvider);
     } catch (error) {
-      console.error("An error occured", error);
+      toast.error("An error occured", error);
     }
   };
 
@@ -131,7 +131,7 @@ function page() {
     try {
       await signInWithRedirect(auth, fProvider);
     } catch (error) {
-      console.error("An error occured", error);
+      toast.error("An error occured", error);
     }
   };
 
