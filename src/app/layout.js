@@ -1,6 +1,7 @@
 import { UserProvider } from '@/components/context/authContext'
 import './globals.css'
 import { ChatContextProvider } from '@/components/context/chatContext'
+import ToastMessage from '@/components/ToastMessage'
 
 
 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
           </body>
         </ChatContextProvider>
       </UserProvider>
+      <ToastMessage />
     </html>
   )
 }
